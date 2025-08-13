@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Button Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .fancy-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .fancy-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        .fancy-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(255, 107, 107, 0.4);
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 16px;
+            min-height: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .counter {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to My Simple Page</h1>
+        <button class="fancy-button" id="clickButton">Click Me!</button>
+        <div class="message" id="message"></div>
+        <div class="counter" id="counter">Clicks: 0</div>
+    </div>
+
+    <script>
+        let clickCount = 0;
+        const messages = [
+            "Hello there! 👋",
+            "Thanks for clicking! 😊",
+            "You're awesome! ⭐",
+            "Keep going! 🚀",
+            "Amazing! 🎉",
+            "You're on fire! 🔥",
+            "Incredible! ✨"
+        ];
+
+        const button = document.getElementById('clickButton');
+        const messageDiv = document.getElementById('message');
+        const counterDiv = document.getElementById('counter');
+
+        button.addEventListener('click', function() {
+            clickCount++;
+            
+            // Get a random message
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            
+            // Update the message
+            messageDiv.textContent = randomMessage;
+            messageDiv.classList.add('success');
+            
+            // Update the counter
+            counterDiv.textContent = `Clicks: ${clickCount}`;
+            
+            // Add a fun animation
+            button.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                button.style.transform = 'scale(1)';
+            }, 150);
+            
+            // Change button text after 10 clicks
+            if (clickCount >= 10) {
+                button.textContent = "You're a clicking champion! 🏆";
+            } else if (clickCount >= 5) {
+                button.textContent = "Keep clicking! 🎯";
+            }
+        });
+
+        // Add hover sound effect simulation
+        button.addEventListener('mouseenter', function() {
+            this.style.filter = 'brightness(110%)';
+        });
+
+        button.addEventListener('mouseleave', function() {
+            this.style.filter = 'brightness(100%)';
+        });
+    </script>
+</body>
+</html>
