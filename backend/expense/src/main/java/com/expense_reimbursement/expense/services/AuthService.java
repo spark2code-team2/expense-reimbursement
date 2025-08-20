@@ -1,0 +1,31 @@
+package com.expense_reimbursement.expense.services;
+
+import com.expense_reimbursement.expense.dto.RegisterRequest;
+import com.expense_reimbursement.expense.entities.User;
+import com.expense_reimbursement.expense.repository.UserRepository; // use .repository if that's your package
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+public class AuthService {
+    private final UserRepository users;
+    private final PasswordEncoder encoder;
+
+    public AuthService(UserRepository users, PasswordEncoder encoder) {
+        this.users = users;
+        this.encoder = encoder;
+    }
+
+    public User register(RegisterRequest r) {
+        if (users.existsByEmail(r.email)) {
+            throw new IllegalArgumentException("Email already in use");
+        }
+        User u = new User();
+        u.setEmail(r.email);
+        u.setPasswordHash(encoder.encode(r.password));
+        u.setName(r.name);
+        u.setRole(r.role != null ? r.role : User.Role.EMPLOYEE);
+        u.setDepartment(r.department);
+        return users.save(u);
+    }
+}
