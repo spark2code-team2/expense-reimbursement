@@ -17,7 +17,6 @@ spring:
       enabled: true
 
 # your existing JWT config stays here
-app:
   jwt:
     secret: "CHANGE_ME_BASE64"
     expiration-minutes: 60
