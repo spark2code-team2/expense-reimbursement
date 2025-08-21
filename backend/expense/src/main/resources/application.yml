@@ -1,22 +1,22 @@
-app:
-  jwt:
-    secret: "change-this-to-a-strong-random-base64-string"
-    expiration-minutes: 60
 spring:
+  application:
+    name: expense
+
   datasource:
-    url: jdbc:h2:mem:expensedb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
+    url: jdbc:mysql://localhost:3306/Spark2CodeDB?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root4321
+
   jpa:
+    show-sql: true
     hibernate:
       ddl-auto: update
-    database-platform: org.hibernate.dialect.H2Dialect
-  h2:
-    console:
-      enabled: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
 
-# your existing JWT config stays here
+app:
   jwt:
-    secret: "CHANGE_ME_BASE64"
+    secret: Y2hhbmdlZC10aGlzLXRvLWEtc3Ryb25nLXJhbmRvbS1iYXNlNjQtc3RyaW5n
     expiration-minutes: 60
