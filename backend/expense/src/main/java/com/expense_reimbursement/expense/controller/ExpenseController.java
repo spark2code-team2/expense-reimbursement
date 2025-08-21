@@ -35,7 +35,6 @@ public class ExpenseController {
         Expense expense = new Expense();
 
         BeanUtils.copyProperties(employeeRequest, expense);
-
         expenseService.editExpense(expense, employeeId, id);
     }
 

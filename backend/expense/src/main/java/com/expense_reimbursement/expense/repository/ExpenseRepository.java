@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface ExpenseRepository extends CrudRepository<Expense, Long> {
-    Optional<Expense> findAllById(long id);
+    Expense findAllById(long id);
 }
