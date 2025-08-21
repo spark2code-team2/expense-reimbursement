@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Button Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: background 0.8s ease;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .fancy-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .fancy-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        .reset-button {
+            background: #555;
+            margin-top: 10px;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 16px;
+            min-height: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .counter, .timer {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fun Button Challenge</h1>
+        <button class="fancy-button" id="clickButton">Click Me!</button>
+        <br>
+        <button class="reset-button" id="resetButton">Reset</button>
+        <div class="message" id="message"></div>
+        <div class="counter" id="counter">Clicks: 0</div>
+        <div class="timer" id="timer">Time: 0s</div>
+    </div>
+
+    <script>
+        let clickCount = 0;
+        let startTime = Date.now();
+        const messages = [
+            "Hello there! 👋",
+            "Thanks for clicking! 😊",
+            "You're awesome! ⭐",
+            "Keep going! 🚀",
+            "Amazing! 🎉",
+            "You're on fire! 🔥",
+            "Incredible! ✨"
+        ];
+
+        const gradients = [
+            "linear-gradient(135deg, #ff9966, #ff5e62)",
+            "linear-gradient(135deg, #36d1dc, #5b86e5)",
+            "linear-gradient(135deg, #ff9a9e, #fad0c4)",
+            "linear-gradient(135deg, #a18cd1, #fbc2eb)",
+            "linear-gradient(135deg, #fddb92, #d1fdff)"
+        ];
+
+        const button = document.getElementById('clickButton');
+        const resetBtn = document.getElementById('resetButton');
+        const messageDiv = document.getElementById('message');
+        const counterDiv = document.getElementById('counter');
+        const timerDiv = document.getElementById('timer');
+
+        // Click handler
+        button.addEventListener('click', function() {
+            clickCount++;
+
+            // Random message
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            messageDiv.textContent = randomMessage;
+            messageDiv.classList.add('success');
+
+            // Update counter
+            counterDiv.textContent = `Clicks: ${clickCount}`;
+
+            // Background change
+            document.body.style.background = gradients[Math.floor(Math.random() * gradients.length)];
+
+            // Button animation
+            button.style.transform = 'scale(0.95)';
+            setTimeout(() => button.style.transform = 'scale(1)', 150);
+
+            // Change text milestones
+            if (clickCount >= 20) {
+                button.textContent = "Unstoppable! 💪";
+                triggerConfetti();
+            } else if (clickCount >= 10) {
+                button.textContent = "You're a champion! 🏆";
+                triggerConfetti();
+            } else if (clickCount >= 5) {
+                button.textContent = "Keep going! 🎯";
+                triggerConfetti();
+            }
+
+            // Optional sound
+            new Audio("https://www.soundjay.com/buttons/button-09.mp3").play();
+        });
+
+        // Reset button
+        resetBtn.addEventListener('click', () => {
+            clickCount = 0;
+            counterDiv.textContent = "Clicks: 0";
+            messageDiv.textContent = "";
+            button.textContent = "Click Me!";
+            document.body.style.background = gradients[0];
+            startTime = Date.now();
+        });
+
+        // Timer update
+        setInterval(() => {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            timerDiv.textContent = `Time: ${elapsed}s`;
+        }, 1000);
+
+        // Confetti effect
+        function triggerConfetti() {
+            const duration = 500;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                const particle = document.createElement("div");
+                particle.textContent = "🎉";
+                particle.style.position = "fixed";
+                particle.style.left = Math.random() * window.innerWidth + "px";
+                particle.style.top = "-20px";
+                particle.style.fontSize = "20px";
+                particle.style.animation = "fall 1s linear";
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 1000);
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            })();
+        }
+    </script>
+
+    <style>
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</body>
+</html>
