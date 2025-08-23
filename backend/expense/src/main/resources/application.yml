@@ -3,7 +3,7 @@ spring:
     name: expense
 
   datasource:
-    url: jdbc:mysql://localhost:3306/Spark2CodeDB?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/expense-reimbursement?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root4321

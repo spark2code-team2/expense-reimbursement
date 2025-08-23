@@ -1,14 +1,14 @@
 package com.expense_reimbursement.expense.repository;
 
 import com.expense_reimbursement.expense.entities.Expense;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public interface ExpenseRepository extends CrudRepository<Expense, Long> {
+public interface ExpenseRepository extends JpaRepository<Expense, Long> {
+//    public List <Expense> findAllExpenseByUserId(Long userId);
+//      List<Expense> findByManagerIdAndStatus(Long managerId, Expense.Status status);
+       List<Expense> findAllByUserIdAndStatus(Long managerId, Expense.Status status);
 
-    public List <Expense> findByUserId(Long userId);
 }
