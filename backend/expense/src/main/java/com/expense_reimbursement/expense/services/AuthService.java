@@ -1,10 +1,15 @@
 package com.expense_reimbursement.expense.services;
 
 import com.expense_reimbursement.expense.dto.RegisterRequest;
+import com.expense_reimbursement.expense.entities.ChooseRole;
 import com.expense_reimbursement.expense.entities.User;
 import com.expense_reimbursement.expense.repository.UserRepository; // use .repository if that's your package
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+
+import static com.expense_reimbursement.expense.entities.ChooseRole.MANAGER;
 
 @Service
 public class AuthService {
@@ -26,6 +31,21 @@ public class AuthService {
         u.setName(r.name);
         u.setRole(r.role != null ? r.role : User.Role.EMPLOYEE);
         u.setDepartment(r.department);
+        //
+        u.setCreatedAt(LocalDateTime.now());
+
+        if (u.getRole().equals(User.Role.EMPLOYEE))
+        {
+            if (users.existsUserIdByDepartmentAndRole(u.getDepartment(), User.Role.MANAGER))
+            {
+                u.setManager(users.findUserByDepartmentAndRole(u.getDepartment(), User.Role.MANAGER));
+            }
+            else
+            {
+                u.setRole(User.Role.MANAGER);
+            }
+        }
+
         return users.save(u);
     }
 }

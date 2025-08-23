@@ -3,6 +3,6 @@ package com.expense_reimbursement.expense.dto;
 import jakarta.validation.constraints.*;
 
 public class LoginRequest {
-    @Email @NotBlank public String email;
-    @NotBlank public String password;
+    @Email(message = "please Enter valid email") @NotBlank(message = "the email must not be empty") public String email;
+    @NotBlank(message = "the password must not be empty") public String password;
 }
