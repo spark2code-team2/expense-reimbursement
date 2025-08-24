@@ -1,6 +1,7 @@
 import React from "react";
 import ManagerDashboard from "./ManagerDashboard.";
 import "./App.css";
+import AdminDashboard from "./AdminDashboard.";
 
 function App() {
   return (
@@ -10,3 +11,4 @@ function App() {
   );
 }
 export default App;
+
