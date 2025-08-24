@@ -16,8 +16,16 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
 
+  servlet:
+    multipart:
+      max-file-size: 5MB   # الحد الأقصى لحجم الملف
+
 app:
   jwt:
     secret: Y2hhbmdlZC10aGlzLXRvLWEtc3Ryb25nLXJhbmRvbS1iYXNlNjQtc3RyaW5n
     expiration-minutes: 60
 
+
+
+file:
+  upload-dir: ./uploads/   # المجلد اللي تتخزن فيه الملفات
