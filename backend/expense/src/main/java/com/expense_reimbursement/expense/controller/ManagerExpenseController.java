@@ -10,6 +10,7 @@ import com.expense_reimbursement.expense.exception.ResourceNotFoundException;
 import com.expense_reimbursement.expense.repository.AuditLogRepository;
 import com.expense_reimbursement.expense.repository.ExpenseRepository;
 import com.expense_reimbursement.expense.repository.NotificationRepository;
+import com.expense_reimbursement.expense.repository.UserRepository;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,12 +37,15 @@ public class ManagerExpenseController {
     @Autowired private ExpenseRepository expenseRepository;
     @Autowired private AuditLogRepository auditLogRepository;
     @Autowired private NotificationRepository notificationRepository;
+    @Autowired private UserRepository userRepository;
 
     @GetMapping("/{managerId}/pending-expenses")
     @ResponseStatus(HttpStatus.OK)
 //    @Transactional(readOnly = true)
-    public List<Expense> getPendingExpenses(@PathVariable Long managerId) {
-        List<Expense> pending = expenseRepository.findAllByUserIdAndStatus(managerId, Expense.Status.PENDING);
+    public List<Expense> getPendingExpenses(@PathVariable Long managerId)
+    {
+        User user = userRepository.findUserByManagerId(managerId);
+        List<Expense> pending = expenseRepository.findAllByUserIdAndStatus(user.getId(), Expense.Status.PENDING);
 
         AuditLog log = new AuditLog(
                 null,
@@ -65,8 +70,10 @@ public class ManagerExpenseController {
         Expense expense = expenseRepository.findById(expenseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Expense not found: " + expenseId));
 
+        long lMangerId =  expense.getUser().getManager().getId();
+
 //        if (expense.getManager() == null || !Objects.equals(expense.getManager().getId(), managerId)) {
-        if (expense.getUser().getId() == null || !Objects.equals(expense.getUser().getId(), managerId)) {
+        if (expense.getUser().getManager().getId() == null || lMangerId != managerId) {
             throw new ForbiddenException("Not authorized to decide on this expense.");
         }
 

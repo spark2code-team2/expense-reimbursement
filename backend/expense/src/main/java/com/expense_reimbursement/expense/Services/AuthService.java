@@ -1,15 +1,12 @@
-package com.expense_reimbursement.expense.services;
+package com.expense_reimbursement.expense.Services;
 
 import com.expense_reimbursement.expense.dto.RegisterRequest;
-import com.expense_reimbursement.expense.entities.ChooseRole;
 import com.expense_reimbursement.expense.entities.User;
 import com.expense_reimbursement.expense.repository.UserRepository; // use .repository if that's your package
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-
-import static com.expense_reimbursement.expense.entities.ChooseRole.MANAGER;
 
 @Service
 public class AuthService {

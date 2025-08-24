@@ -6,7 +6,7 @@ import com.expense_reimbursement.expense.dto.RegisterRequest;
 import com.expense_reimbursement.expense.entities.User;
 import com.expense_reimbursement.expense.repository.UserRepository; // or .repository
 import com.expense_reimbursement.expense.Security.JwtService;
-import com.expense_reimbursement.expense.services.AuthService;
+import com.expense_reimbursement.expense.Services.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
