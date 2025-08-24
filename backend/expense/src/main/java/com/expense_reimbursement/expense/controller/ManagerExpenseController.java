@@ -44,8 +44,16 @@ public class ManagerExpenseController {
 //    @Transactional(readOnly = true)
     public List<Expense> getPendingExpenses(@PathVariable Long managerId)
     {
-        User user = userRepository.findUserByManagerId(managerId);
-        List<Expense> pending = expenseRepository.findAllByUserIdAndStatus(user.getId(), Expense.Status.PENDING);
+
+
+        List<Expense> pending = new ArrayList<Expense>();
+        List <User> users = userRepository.findAllUserByManagerId(managerId);
+
+        for (User user1 : users)
+        {
+            List<Expense> expenses = expenseRepository.findAllByUserIdAndStatus(user1.getId(), Expense.Status.PENDING);
+            pending.addAll(expenses);
+        }
 
         AuditLog log = new AuditLog(
                 null,

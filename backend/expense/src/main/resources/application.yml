@@ -20,5 +20,4 @@ app:
   jwt:
     secret: Y2hhbmdlZC10aGlzLXRvLWEtc3Ryb25nLXJhbmRvbS1iYXNlNjQtc3RyaW5n
     expiration-minutes: 60
-  upload:
-    directory: uploads/
+
