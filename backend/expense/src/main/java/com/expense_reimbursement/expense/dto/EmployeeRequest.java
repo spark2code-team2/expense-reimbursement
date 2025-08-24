@@ -36,8 +36,8 @@ public class EmployeeRequest extends Expense {
     @NotNull(message = "description should not be null")
     private String description;
 
-    @NotBlank(message = "receipt should not be empty")
-    @NotNull(message = "receipt should not be null u need to provide the link")
+//    @NotBlank(message = "receipt should not be empty")
+//    @NotNull(message = "receipt should not be null u need to provide the link")
     private String receiptPath;
 
     public String getTitle() {

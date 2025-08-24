@@ -25,5 +25,7 @@ app:
     secret: Y2hhbmdlZC10aGlzLXRvLWEtc3Ryb25nLXJhbmRvbS1iYXNlNjQtc3RyaW5n
     expiration-minutes: 60
 
+
+
 file:
   upload-dir: ./uploads/   # المجلد اللي تتخزن فيه الملفات

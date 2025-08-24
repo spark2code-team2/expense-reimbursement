@@ -7,8 +7,6 @@ import java.util.List;
 
 @Repository
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
-//    public List <Expense> findAllExpenseByUserId(Long userId);
-//      List<Expense> findByManagerIdAndStatus(Long managerId, Expense.Status status);
        List<Expense> findAllByUserIdAndStatus(Long managerId, Expense.Status status);
-
+       List<Expense> findAllByUserId(Long userId);
 }
