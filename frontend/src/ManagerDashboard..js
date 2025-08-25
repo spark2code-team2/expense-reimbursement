@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { getPendingExpenses, decideExpense } from './service/api';
+
 
 function ManagerDashboard() {
   const [expenses, setExpenses] = useState([
@@ -55,13 +57,38 @@ function ManagerDashboard() {
         </nav>
       </header>
 
+<style jsx>{`
+  .main-content {
+    padding: 1rem;
+    overflow-x: auto; /* allows horizontal scroll if table is too wide */
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* makes columns fit evenly */
+  }
+
+  th, td {
+    padding: 0.5rem;
+    text-align: center;
+    word-wrap: break-word; /* wrap long text */
+  }
+
+  input, select {
+    width: 100%; /* fit in the cell */
+    box-sizing: border-box;
+  }
+
+  .table-container {
+    overflow-x: auto; /* ensures table fits inside container */
+  }
+`}</style>
+
      <main className="main-content manager-dashboard">
         <div className="card">
    <h2>The Manager Dashboard</h2>
 <div className="table-container">
-  <table>
-    
-  </table>
 </div>
           <table>
             <thead>
@@ -130,4 +157,3 @@ function ManagerDashboard() {
 }
 
 export default ManagerDashboard;
-

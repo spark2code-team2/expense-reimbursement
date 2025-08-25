@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { getExpenses, exportExpensesCSV } from './services/api';
+import { getExpenses, exportExpensesCSV } from './service/api';
 
 
 const AdminDashboard = () => {
@@ -351,7 +351,7 @@ const AdminDashboard = () => {
 
       <div className="container">
         <header className="header">
-          <h1 className="title">Expense Management Dashboard</h1>
+          <h1 className="title">Expense Admin Dashboard</h1>
           <div className="button-group">
             {/* User Management Dropdown */}
             <div className="dropdown">
