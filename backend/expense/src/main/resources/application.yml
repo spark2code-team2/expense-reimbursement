@@ -28,4 +28,4 @@ app:
 
 
 file:
-  upload-dir: ./uploads/   # المجلد اللي تتخزن فيه الملفات
+  upload-dir: uploads/  # المجلد اللي تتخزن فيه الملفات

@@ -1,6 +1,4 @@
 package com.expense_reimbursement.expense.dto;
-import com.expense_reimbursement.expense.entities.Expense;
-import com.expense_reimbursement.expense.entities.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -9,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class EmployeeRequest extends Expense {
+public class EmployeeRequestValidation {
 
     @NotBlank(message = "title should not be empty")
     @NotNull(message = "title should not be null")
@@ -19,7 +17,6 @@ public class EmployeeRequest extends Expense {
     @NotNull(message = "category should not be null")
     private String category;
 
-    //try this @DIgits
     @Min(value = 1, message =  "the amount should be greater than 1")
     @NotNull(message = "amount should not be null")
     private Double amount;
@@ -36,8 +33,6 @@ public class EmployeeRequest extends Expense {
     @NotNull(message = "description should not be null")
     private String description;
 
-//    @NotBlank(message = "receipt should not be empty")
-//    @NotNull(message = "receipt should not be null u need to provide the link")
     private String receiptPath;
 
     public String getTitle() {
@@ -92,8 +87,9 @@ public class EmployeeRequest extends Expense {
         return receiptPath;
     }
 
-    public void setReceiptPath(String receiptPath) {
+    public void  setReceiptPath(String receiptPath) {
         this.receiptPath = receiptPath;
     }
+
 
 }
