@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.expense_reimbursement.expense.entities.Expense.Status.*;
@@ -29,7 +30,10 @@ public class ExpenseService {
     private ExpenseRepository expenseRepository;
     @Autowired
     private UserRepository userRepository;
-    @Value("${app.upload.directory}")
+    @Autowired
+    private MappingServices  mappingServices;
+
+    @Value("${file.upload-dir}")
     private String uploadDir;
 
     public void addExpense(Expense expense, long employeeId) throws employeeNotFoundException {
@@ -46,29 +50,22 @@ public class ExpenseService {
         }
     }
 
-    // the id represents the expense id
-    public Expense editExpense(ExpenseRequestObject requestObject) throws Exception
+    public void editExpense(Expense expense) throws Exception
     {
-        if (requestObject.getStatus().equals(APPROVED) || requestObject.getStatus().equals(REJECTED))
+        if (expense.getStatus().equals(APPROVED) || expense.getStatus().equals(REJECTED))
         {
-            throw new expenseAlreadyReviwedException("expense id :" + requestObject.getId() + " already reviewed no changes can be done");
+            throw new expenseAlreadyReviwedException("expense id :" + expense.getId() + " already reviewed no changes can be done");
         }
-        if(!(userRepository.existsById(requestObject.getUserId())))
+        if(!(userRepository.existsById(expense.getUser().getId())))
         {
-            throw new employeeNotFoundException("user not found with id : " + requestObject.getUserId());
+            throw new employeeNotFoundException("user not found with id : " + expense.getUser().getId());
         }
-        if(!(expenseRepository.existsById(requestObject.getId())))
+        if(!(expenseRepository.existsById(expense.getUser().getId())))
         {
-            throw new expenseNotFoundException("expense not found with id : " + requestObject.getId());
+            throw new expenseNotFoundException("expense not found with id : " + expense.getId());
         }
 
-        Expense expense = new Expense();
-
-        expense = ExpenseRequestObject.convertToExpense(requestObject);
-        expense.setUser(userRepository.findUserById(requestObject.getUserId()));
-        return expenseRepository.save(expense);
-
-
+         expenseRepository.save(expense);
     }
 
     public void deleteExpense(long id) throws Exception
@@ -82,12 +79,18 @@ public class ExpenseService {
         expenseRepository.deleteById(id);
     }
 
-    public List<Expense> getExpenseList(Long userId) throws Exception {
+    public List<ExpenseRequestObject> getExpenseList(Long userId) throws Exception {
         if(!(userRepository.existsById(userId)))
         {
+
             throw new employeeNotFoundException("user not found with id : " + userId);
         }
-        List <Expense> expenses = expenseRepository.findAllByUserId(userId);
+        List <ExpenseRequestObject> expenses =  new ArrayList<>();
+
+        for (Expense expense : expenseRepository.findAllByUserId(userId))
+        {
+            expenses.add(mappingServices.getExpense(expense));
+        }
         return expenses;
     }
 

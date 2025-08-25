@@ -1,5 +1,7 @@
 package com.expense_reimbursement.expense.controller;
 
+import com.expense_reimbursement.expense.Services.MappingServices;
+import com.expense_reimbursement.expense.dto.ExpenseRequestObject;
 import com.expense_reimbursement.expense.dto.DecisionRequest;
 import com.expense_reimbursement.expense.entities.AuditLog;
 import com.expense_reimbursement.expense.entities.Expense;
@@ -21,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,21 +39,22 @@ public class ManagerExpenseController {
     @Autowired private AuditLogRepository auditLogRepository;
     @Autowired private NotificationRepository notificationRepository;
     @Autowired private UserRepository userRepository;
+    @Autowired private MappingServices mappingServices;
 
     @GetMapping("/{managerId}/pending-expenses")
     @ResponseStatus(HttpStatus.OK)
 //    @Transactional(readOnly = true)
-    public List<Expense> getPendingExpenses(@PathVariable Long managerId)
+    public List<ExpenseRequestObject> getPendingExpenses(@PathVariable Long managerId)
     {
 
-
-        List<Expense> pending = new ArrayList<Expense>();
+        List<ExpenseRequestObject> pending = new ArrayList<>();
         List <User> users = userRepository.findAllUserByManagerId(managerId);
 
         for (User user1 : users)
         {
             List<Expense> expenses = expenseRepository.findAllByUserIdAndStatus(user1.getId(), Expense.Status.PENDING);
-            pending.addAll(expenses);
+            List<ExpenseRequestObject> tempList = mappingServices.convertList(expenses);
+            pending.addAll(tempList);
         }
 
         AuditLog log = new AuditLog(
@@ -71,7 +73,7 @@ public class ManagerExpenseController {
     @PostMapping("/{managerId}/expenses/{expenseId}/decision")
     @ResponseStatus(HttpStatus.OK)
     @Transactional
-    public Expense decideExpense(@PathVariable Long managerId,
+    public ExpenseRequestObject decideExpense(@PathVariable Long managerId,
                                  @PathVariable Long expenseId,
                                  @RequestBody @Validated DecisionRequest request) {
 
@@ -107,7 +109,7 @@ public class ManagerExpenseController {
         n.setSentAt(LocalDateTime.now());
         notificationRepository.save(n);
 
-        return expense;
+        return mappingServices.getExpense(expense);
     }
 
 

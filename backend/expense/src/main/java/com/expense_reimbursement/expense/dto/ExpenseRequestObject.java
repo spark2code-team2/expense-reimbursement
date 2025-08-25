@@ -8,6 +8,7 @@ public class ExpenseRequestObject {
 
     Long id;
     Long userId;
+    Long managerId;
     String title;
     String category;
     Double amount;
@@ -16,8 +17,17 @@ public class ExpenseRequestObject {
     String status;
     String receiptPath;
     LocalDate dateIncurred;
+    LocalDateTime CratedAt;
 
     public ExpenseRequestObject() {
+    }
+
+    public Long getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(Long managerId) {
+        this.managerId = managerId;
     }
 
     public Long getId() {
@@ -100,19 +110,11 @@ public class ExpenseRequestObject {
         this.dateIncurred = dateIncurred;
     }
 
-    public static Expense convertToExpense(ExpenseRequestObject requestObject){
-        Expense obj = new Expense();
-        obj.setId(requestObject.getId());
-        obj.setTitle(requestObject.getTitle());
-        obj.setCategory(requestObject.getCategory());
-        obj.setAmount(requestObject.getAmount());
-        obj.setCurrency(requestObject.getCurrency());
-        obj.setDescription(requestObject.getDescription());
-        obj.setCreatedAt(LocalDateTime.now());
-        obj.setDateIncurred(requestObject.getDateIncurred());
-        obj.setStatus(Expense.Status.valueOf(requestObject.getStatus()));
-        obj.setReceiptPath(requestObject.getReceiptPath());
+    public LocalDateTime getCratedAt() {
+        return CratedAt;
+    }
 
-        return obj;
+    public void setCratedAt(LocalDateTime cratedAt) {
+        CratedAt = cratedAt;
     }
 }
