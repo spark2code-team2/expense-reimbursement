@@ -1,5 +1,6 @@
 package com.expense_reimbursement.expense.controller;
 
+import com.expense_reimbursement.expense.dto.AdminRequest;
 import com.expense_reimbursement.expense.entities.Expense;
 import com.expense_reimbursement.expense.repository.UserRepository;
 import com.expense_reimbursement.expense.Services.ExpenseService;
@@ -27,10 +28,14 @@ public class AdminController {
     @Autowired
     private CsvService csvService;
 
+    @Autowired
+    private  MappingServices mappingServices;
+
     @GetMapping("/expenses")
-    public ResponseEntity<List<Expense>> getAllExpenses() {
+    public ResponseEntity<List<AdminRequest>> getAllExpenses() {
         List<Expense> expenses = expenseService.getAllExpenses();
-        return ResponseEntity.ok(expenses);
+        List <AdminRequest> expense =  mappingServices.convertListT(expenses);
+        return ResponseEntity.ok(expense);
     }
 
     @GetMapping("/users")
