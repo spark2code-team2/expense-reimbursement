@@ -3,6 +3,7 @@ package com.expense_reimbursement.expense.controller;
 import com.expense_reimbursement.expense.dto.AuthResponse;
 import com.expense_reimbursement.expense.dto.LoginRequest;
 import com.expense_reimbursement.expense.dto.RegisterRequest;
+import com.expense_reimbursement.expense.entities.ChooseRole;
 import com.expense_reimbursement.expense.entities.User;
 import com.expense_reimbursement.expense.repository.UserRepository; // or .repository
 import com.expense_reimbursement.expense.Security.JwtService;
@@ -38,7 +39,14 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest req) {
+    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest req) throws Exception {
+
+//        if(req.role.equals(User.Role.ADMIN) && users.findAllByRole(User.Role.ADMIN).size() >= 1  || users.existsByDepartmentAndRole(req.department, User.Role.ADMIN))
+        if(req.role.equals(User.Role.ADMIN) && users.findAllByRole(User.Role.ADMIN).size() >= 1)
+        {
+            throw new Exception("Number of Admins Reached it limts");
+        }
+
         User u = authService.register(req);
         UserDetails ud = uds.loadUserByUsername(u.getEmail());
         String token = jwt.generate(ud);
