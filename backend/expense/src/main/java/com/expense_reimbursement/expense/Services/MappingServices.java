@@ -1,5 +1,6 @@
 package com.expense_reimbursement.expense.Services;
 
+import com.expense_reimbursement.expense.dto.AdminRequest;
 import com.expense_reimbursement.expense.dto.EmployeeRequestValidation;
 import com.expense_reimbursement.expense.dto.ExpenseRequestObject;
 import com.expense_reimbursement.expense.entities.Expense;
@@ -78,5 +79,33 @@ public class MappingServices {
         }
 
         return modifiedExpense;
+    }
+
+
+    public List<AdminRequest> convertListT(List <Expense> expenses)
+    {
+        List<AdminRequest> modifiedExpense = new ArrayList<>();
+
+        for(Expense expense : expenses)
+        {
+            modifiedExpense.add(getInfo(expense));
+        }
+
+        return modifiedExpense;
+    }
+
+    public AdminRequest getInfo(Expense expense)
+    {
+        AdminRequest obj =  new AdminRequest();
+        obj.setExpenseId(expense.getId());
+        obj.setUserId(expense.getUser().getId());
+        obj.setName(expense.getUser().getName());
+        obj.setAmount(expense.getAmount());
+        obj.setTitle(expense.getTitle());
+        obj.setDateIncurred(expense.getDateIncurred());
+        obj.setStatus(expense.getStatus().toString());
+        obj.setDescription(expense.getDescription());
+
+        return obj;
     }
 }
