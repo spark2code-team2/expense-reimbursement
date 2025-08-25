@@ -35,7 +35,7 @@ public class AdminRequest {
    public void setName(String name) {
       Name = name;
    }
-   
+
    public Double getAmount() {
       return amount;
    }
