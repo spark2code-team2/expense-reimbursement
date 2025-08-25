@@ -36,12 +36,14 @@ For frontend ( cd frontend )
 ## API endpoint 
 1.	Authentication 
 2.	Expenses 
-For ## authentication ( request (/api/auth )
+For
+## authentication ( request (/api/auth )
 Post (/register)  registration for the user
 Post (/login)  logging in for the user
 Get 
 
-For ## Expenses 
+For
+## Expenses 
 Post (employee/{employeeId}/addexpense)  for the employee to add an expense
 Put (employee/{employeeId}/editexpense/{id})  for the employee to edit their expense
 DELETE (employee/{employeeId}/delete_expense/{id})  for the employee to delete the expense 
