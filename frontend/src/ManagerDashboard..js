@@ -3,29 +3,25 @@ import React, { useState } from "react";
 function ManagerDashboard() {
   const [expenses, setExpenses] = useState([
     {
-      id: 1,
-      category: "MEAL",
-      amount: 3.5,
-      date: "2025-08-06",
-      status: "Pending",
-      note: "",
-      receipt: "",
+      id: 8,
+      userId: 6,
+      managerId: 2,
+      title: "expense for Food",
+      category: "Food",
+      amount: 15,
+      currency: "USD",
+      description: "Lunch meeting with client",
+      status: "PENDING",
+      receiptPath: "uploads/1756106809838.png",
+      dateIncurred: "2025-09-15",
+      cratedAt: "2025-08-25T11:26:49.922045",
     },
-     {
-    id: 2,
-    category: "TRAVEL",
-    amount: 12.75,
-    date: "2025-08-15",
-    status: "Pending",
-    note: "",
-    receipt: "",
-  },
   ]);
 
-  const handleNoteChange = (id, value) => {
+  const handleDescriptionChange = (id, value) => {
     setExpenses((prev) =>
       prev.map((expense) =>
-        expense.id === id ? { ...expense, note: value } : expense
+        expense.id === id ? { ...expense, description: value } : expense
       )
     );
   };
@@ -38,18 +34,15 @@ function ManagerDashboard() {
     );
   };
 
-  const handleReceiptChange = (id, file) => {
-    setExpenses((prev) =>
-      prev.map((expense) =>
-        expense.id === id ? { ...expense, receipt: file.name } : expense
-      )
-    );
-  };
-
   const handleSave = (id) => {
     const expense = expenses.find((e) => e.id === id);
     console.log("Saved expense:", expense);
-    alert(`Saved: Note="${expense.note}", Status="${expense.status}", Receipt="${expense.receipt}"`);
+    alert(
+      `Saved:
+      Description="${expense.description}",
+      Status="${expense.status}",
+      Receipt="${expense.receiptPath}"`
+    );
   };
 
   return (
@@ -62,19 +55,29 @@ function ManagerDashboard() {
         </nav>
       </header>
 
-      <main className="main-content">
+     <main className="main-content manager-dashboard">
         <div className="card">
-          <h2>The Manager Dashboard</h2>
+   <h2>The Manager Dashboard</h2>
+<div className="table-container">
+  <table>
+    
+  </table>
+</div>
           <table>
             <thead>
               <tr>
-                <th>Request ID</th>
+                <th>Expense ID</th>
+                <th>User ID</th>
+                <th>Manager ID</th>
+                <th>Title</th>
                 <th>Category</th>
                 <th>Amount</th>
-                <th>Date</th>
+                <th>Currency</th>
+                <th>Date Incurred</th>
+                <th>Created At</th>
                 <th>Receipt</th>
                 <th>Status</th>
-                <th>Note</th>
+                <th>Description</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -82,18 +85,15 @@ function ManagerDashboard() {
               {expenses.map((expense) => (
                 <tr key={expense.id}>
                   <td>{expense.id}</td>
+                  <td>{expense.userId}</td>
+                  <td>{expense.managerId}</td>
+                  <td>{expense.title}</td>
                   <td>{expense.category}</td>
                   <td>{expense.amount}</td>
-                  <td>{expense.date}</td>
-                  <td>
-                    <input
-                      type="file"
-                      onChange={(e) =>
-                        handleReceiptChange(expense.id, e.target.files[0])
-                      }
-                    />
-                    {expense.receipt && <span>{expense.receipt}</span>}
-                  </td>
+                  <td>{expense.currency}</td>
+                  <td>{expense.dateIncurred}</td>
+                  <td>{expense.cratedAt}</td>
+                  <td>{expense.receiptPath && <span>{expense.receiptPath}</span>}</td>
                   <td>
                     <select
                       value={expense.status}
@@ -101,18 +101,18 @@ function ManagerDashboard() {
                         handleStatusChange(expense.id, e.target.value)
                       }
                     >
-                      <option value="Pending">Pending</option>
-                      <option value="Approved">Approved</option>
-                      <option value="Registered">Registered</option>
+                      <option value="PENDING">PENDING</option>
+                      <option value="APPROVED">APPROVED</option>
+                      <option value="REGISTERED">REGISTERED</option>
                     </select>
                   </td>
                   <td>
                     <input
                       type="text"
-                      value={expense.note}
-                      placeholder="Write note..."
+                      value={expense.description}
+                      placeholder="Write description..."
                       onChange={(e) =>
-                        handleNoteChange(expense.id, e.target.value)
+                        handleDescriptionChange(expense.id, e.target.value)
                       }
                     />
                   </td>
@@ -130,3 +130,4 @@ function ManagerDashboard() {
 }
 
 export default ManagerDashboard;
+
