@@ -1,5 +1,5 @@
 import React from "react";
-import ManagerDashboard from "./ManagerDashboard.";
+import ManagerDashboard from "./ManagerDashboard";
 import "./App.css";
 import AdminDashboard from "./AdminDashboard";
 
